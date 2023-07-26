@@ -5,6 +5,7 @@ import { useState } from "react";
 
 export default function Home() {
   const [amount, setAmount] = useState(0);
+  const [errors, setErrors] = useState([]);
   const [propertyPrice, setPropertyPrice] = useState(0);
   const [downPayment, setDownPayment] = useState(5);
   const [interestRate, setInterestRate] = useState(0);
@@ -18,6 +19,7 @@ export default function Home() {
     axios
       .post(
         "https://calculator-101-c3264ca28660.herokuapp.com/api/v1/calculate",
+        // "http://localhost:3001/api/v1/calculate",
         {
           property_price: propertyPrice,
           down_payment: downPayment,
@@ -29,7 +31,9 @@ export default function Home() {
       .then(({ data }) => {
         setAmount(data.amount);
       })
-      .catch((error) => {});
+      .catch(({ response }) => {
+        setErrors(response.data.errors);
+      });
   };
 
   return (
@@ -44,6 +48,15 @@ export default function Home() {
               This form calculates your mortgage payment based on the loan
               amount, interest rate, payment frequency and term.
             </p>
+            {errors.length > 0 &&
+              (errors as any[]).map((error, index) => (
+                <div
+                  key={`error-${index}`}
+                  className="text-red-500 text-sm font-semibold leading-6"
+                >
+                  {error}
+                </div>
+              ))}
 
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-5">
               <div className="sm:col-span-3">
