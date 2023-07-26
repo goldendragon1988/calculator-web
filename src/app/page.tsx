@@ -7,7 +7,7 @@ export default function Home() {
   const [amount, setAmount] = useState(0);
   const [propertyPrice, setPropertyPrice] = useState(0);
   const [downPayment, setDownPayment] = useState(5);
-  const [interestRate, setInterestRate] = useState(0);
+  const [interestRate, setInterestRate] = useState(0.0);
   const [amortizationPeriod, setAmortizationPeriod] = useState(0);
   const [paymentFrequency, setPaymentFrequency] = useState<
     "bi_weekly" | "accelerated_bi_weekly" | "monthly"
